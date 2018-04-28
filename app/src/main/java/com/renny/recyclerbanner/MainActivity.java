@@ -19,8 +19,8 @@ public class MainActivity extends AppCompatActivity implements BannerLayout.OnBa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        BannerLayout  recyclerBanner =  findViewById(R.id.recycler);
-        BannerLayout bannerVertical =  findViewById(R.id.recycler_ver);
+        BannerLayout bannerVertical0 = findViewById(R.id.recycler);
+        BannerLayout bannerVertical = findViewById(R.id.recycler_ver);
 
         List<String> list = new ArrayList<>();
         list.add("http://img0.imgtn.bdimg.com/it/u=1352823040,1166166164&fm=27&gp=0.jpg");
@@ -29,22 +29,26 @@ public class MainActivity extends AppCompatActivity implements BannerLayout.OnBa
         list.add("http://img0.imgtn.bdimg.com/it/u=3184221534,2238244948&fm=27&gp=0.jpg");
         list.add("http://img4.imgtn.bdimg.com/it/u=1794621527,1964098559&fm=27&gp=0.jpg");
         list.add("http://img4.imgtn.bdimg.com/it/u=1243617734,335916716&fm=27&gp=0.jpg");
-        WebBannerAdapter webBannerAdapter=new WebBannerAdapter(this,list);
+        WebBannerAdapter webBannerAdapter = new WebBannerAdapter(this, list);
         webBannerAdapter.setOnBannerItemClickListener(new BannerLayout.OnBannerItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Toast.makeText(MainActivity.this, "点击了第  " + position+"  项", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "点击了第  " + position + "  项", Toast.LENGTH_SHORT).show();
             }
         });
 
-        WebBannerAdapter WebBannerAdapter2 =new WebBannerAdapter(this,list);
+        WebBannerAdapter WebBannerAdapter2 = new WebBannerAdapter(this, list);
         WebBannerAdapter2.setOnBannerItemClickListener(new BannerLayout.OnBannerItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Toast.makeText(MainActivity.this, "点击了第  " + position+"  项", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "点击了第  " + position + "  项", Toast.LENGTH_SHORT).show();
             }
         });
-        recyclerBanner.setAdapter(webBannerAdapter);
+        bannerVertical0.setAdapter(webBannerAdapter);
+//        bannerVertical0.setShowIndicator(false); // 关闭指示器
+//        bannerVertical0.setAutoPlaying(false); // 关闭自动播放
+        bannerVertical0.setIndicatorSelecterDrawable(getResources().getDrawable(R.drawable.list_shao_s2));
+
         bannerVertical.setAdapter(WebBannerAdapter2);
     }
 
@@ -52,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements BannerLayout.OnBa
     public void jump(View view) {
         startActivity(new Intent(MainActivity.this, NormalActivity.class));
     }
+
     public void jumpOverFlying(View view) {
         startActivity(new Intent(MainActivity.this, OverFlyingActivity.class));
     }

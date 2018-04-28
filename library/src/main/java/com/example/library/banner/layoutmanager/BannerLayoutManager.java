@@ -21,6 +21,7 @@ import static android.support.v7.widget.RecyclerView.NO_POSITION;
  * Please make sure your child view have the same size.
  */
 
+
 @SuppressWarnings({"WeakerAccess", "unused", "SameParameterValue"})
 public  class BannerLayoutManager extends RecyclerView.LayoutManager {
     public static final int DETERMINE_BY_MAX_AND_MIN = -1;

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
@@ -41,6 +42,10 @@ public class BannerLayout extends FrameLayout {
     private RecyclerView mRecyclerView;
 
     private BannerLayoutManager mLayoutManager;
+
+    public void setIndicatorSelecterDrawable(Drawable drawable) {
+        this.mSelectedDrawable = drawable;
+    }
 
     private int WHAT_AUTO_PLAY = 1000;
 
@@ -143,7 +148,8 @@ public class BannerLayout extends FrameLayout {
         indicatorContainer.setAdapter(indicatorAdapter);
         LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.gravity = Gravity.BOTTOM | gravity;
+        // params.gravity = Gravity.BOTTOM | gravity;
+        params.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
         params.setMargins(marginLeft, 0, marginRight, marginBottom);
         addView(indicatorContainer, params);
         if (!showIndicator) {
@@ -251,17 +257,66 @@ public class BannerLayout extends FrameLayout {
     }
 
     @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+    }
+
+    @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
+//        switch (ev.getAction()) {
+//            case MotionEvent.ACTION_DOWN:
+//                setPlaying(false);
+//                break;
+//            case MotionEvent.ACTION_MOVE:
+//
+//
+//                if (getScrollX() <= 0) {
+//                    scrollTo(0, 0);
+//                }
+//                break;
+//            //return true;
+//            case MotionEvent.ACTION_UP:
+//            case MotionEvent.ACTION_CANCEL:
+//                setPlaying(true);
+//                break;
+//        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    PointF mFirstPointF = new PointF();
+    PointF mLastPointF = new PointF();
+
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 setPlaying(false);
+                mFirstPointF.set(ev.getX(), ev.getY());
+                mLastPointF.set(ev.getX(), ev.getY());
                 break;
+            case MotionEvent.ACTION_MOVE:
+
+                float RelativeMove = mLastPointF.x - ev.getX(); // 相对移动的距离
+
+                if (RelativeMove <= 0) {
+                    scrollTo(0, 0);
+                }
+                break;
+            //return true;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 setPlaying(true);
                 break;
         }
-        return super.dispatchTouchEvent(ev);
+
+        return super.onInterceptTouchEvent(ev);
     }
 
     @Override

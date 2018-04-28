@@ -52,7 +52,6 @@ public class WebBannerAdapter extends RecyclerView.Adapter<WebBannerAdapter.MzVi
                 if (onBannerItemClickListener != null) {
                     onBannerItemClickListener.onItemClick(P);
                 }
-
             }
         });
     }
